@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+
+  <div>
+    <h2>Eminem</h2>
+    <div id="Eminem">
+
+    </div>
+
+    <h2>Metallica</h2>
+    <div id="Metallica">
+
+    </div>
+
+    <h2>Behemoth</h2>
+    <div id="Behemoth">
+
+    </div>
+  </div>
+
+
+
+
+
+
+  <script>
+    let headers = new Headers({
+      "x-rapidapi-host": "deezerdevs-deezer.p.rapidapi.com",
+      "x-rapidapi-key": "46b7b8bb48msh18118826d934364p1f8e03jsn798d9c136d1a",
+    });
+
+
+
+    window.onload = function () {
+      let fetchArtists = (artist) => {
+        fetch("https://deezerdevs-deezer.p.rapidapi.com/search?q=" + artist, {
+            method: "GET",
+            headers,
+          })
+          .then((response) => {
+            return response.json();
+
+          })
+
+
+          .then((songs) => {
+            let songInfo = songs.data;
+            console.log(songInfo)
+
+            let div = document.querySelector("#" + artist.charAt(0).toUpperCase() + artist.slice(1));
+            console.log(div)
+
+            for (let i = 0; i < 12; i++) {
+              div.innerHTML +=
+                `<div class="card">
+                    <img src="${songInfo[i].album.cover_medium}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title">${songInfo[i].title_short}</h5>
+                    </div>
+                  </div>`
+            }
+          })
+
+      }
+
+      fetchArtists("eminem")
+      fetchArtists("metallica")
+      fetchArtists("behemoth")
+
+    };
+  </script>
+</body>
+
+</html>
